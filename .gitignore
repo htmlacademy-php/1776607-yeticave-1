@@ -9,5 +9,5 @@ Thumbs.db
 vendor
 uploads/*
 !uploads/.gitkeep
-commands.txt
 .env
+docs/commands.txt

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 $is_auth = rand(0, 1);
 
 $user_name = 'Stepan Kormilin'; // укажите здесь ваше имя
@@ -29,7 +31,7 @@ $user_name = 'Stepan Kormilin'; // укажите здесь ваше имя
         <nav class="user-menu">
             <?php if ($is_auth): ?>
                 <div class="user-menu__logged">
-                    <p><?php echo $user_name; ?></p>
+                    <p><?= $user_name; ?></p>
                     <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
                     <a class="user-menu__logout" href="pages/logout.html">Выход</a>
                 </div>
