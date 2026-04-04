@@ -1,0 +1,20 @@
+# Docker команды для yeticave
+
+Запустить все контейнеры:
+  docker compose up -d
+
+Остановить все контейнеры (данные сохраняются):
+  docker compose down
+
+Остановить и удалить все данные БД:
+  docker compose down -v
+
+Перезапустить (с пересборкой PHP-образа):
+  docker compose up -d --build
+
+Статус контейнеров:
+  docker compose ps
+
+Логи конкретного сервиса (nginx / php / mysql / phpmyadmin):
+  docker compose logs mysql
+  docker compose logs nginx --tail=50
