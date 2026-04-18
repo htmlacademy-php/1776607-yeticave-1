@@ -1,11 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
+require 'functions.php';
 require_once 'data.php';
 
-$is_auth = rand(0, 1);
+/**
+ * @var array $categories
+ * @var array $lots
+ */
 
-$user_name = 'Stepan Kormilin'; // укажите здесь ваше имя
+$isAuth = rand(0, 1);
+
+$userName = 'Stepan Kormilin';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -31,9 +38,9 @@ $user_name = 'Stepan Kormilin'; // укажите здесь ваше имя
         <a class="main-header__add-lot button" href="pages/add-lot.html">Добавить лот</a>
 
         <nav class="user-menu">
-            <?php if ($is_auth): ?>
+            <?php if ($isAuth): ?>
                 <div class="user-menu__logged">
-                    <p><?= $user_name; ?></p>
+                    <p><?= $userName; ?></p>
                     <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
                     <a class="user-menu__logout" href="pages/logout.html">Выход</a>
                 </div>
@@ -57,9 +64,9 @@ $user_name = 'Stepan Kormilin'; // укажите здесь ваше имя
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
 
-            <?php foreach ($cats as $category): ?>
+            <?php foreach ($categories as $category): ?>
                 <li class="promo__item promo__item--boards">
-                    <a class="promo__link" href="pages/all-lots.html"><?= $category; ?></a>
+                    <a class="promo__link" href="pages/all-lots.html"><?= $category ?></a>
                 </li>
             <?php endforeach; ?>
 
@@ -82,7 +89,7 @@ $user_name = 'Stepan Kormilin'; // укажите здесь ваше имя
                         <div class="lot__state">
                             <div class="lot__rate">
                                 <span class="lot__amount">Стартовая цена</span>
-                                <span class="lot__cost"><?= $lot['price'] ?? ''; ?><b class="rub">р</b></span>
+                                <span class="lot__cost"><?= format_price($lot['price'] ?? 0); ?></span>
                             </div>
                             <div class="lot__timer timer">12:23</div>
                         </div>
