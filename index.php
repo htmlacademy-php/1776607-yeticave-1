@@ -1,6 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
+require 'functions.php';
 require_once 'data.php';
 
 /**
@@ -8,11 +10,9 @@ require_once 'data.php';
  * @var array $lots
  */
 
-require 'functions.php';
+$isAuth = rand(0, 1);
 
-$is_auth = rand(0, 1);
-
-$user_name = 'Stepan Kormilin'; // укажите здесь ваше имя
+$userName = 'Stepan Kormilin';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -38,9 +38,9 @@ $user_name = 'Stepan Kormilin'; // укажите здесь ваше имя
         <a class="main-header__add-lot button" href="pages/add-lot.html">Добавить лот</a>
 
         <nav class="user-menu">
-            <?php if ($is_auth): ?>
+            <?php if ($isAuth): ?>
                 <div class="user-menu__logged">
-                    <p><?= $user_name; ?></p>
+                    <p><?= $userName; ?></p>
                     <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
                     <a class="user-menu__logout" href="pages/logout.html">Выход</a>
                 </div>

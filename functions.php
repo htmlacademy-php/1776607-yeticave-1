@@ -1,7 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-const PRICE_FORMAT_THOUSAND_THRESHOLD = 1000;
+require_once 'constants.php';
 
 /**
  * Formats a numeric price for display in rubles.
