@@ -21,3 +21,15 @@ function format_price(int $price): string {
 
     return $formatted_price . ' ₽';
 }
+
+/**
+ * Escapes a string for safe HTML output.
+ *
+ * @param mixed $value Source value that should be rendered in HTML.
+ *
+ * @return string Safe escaped string.
+ */
+function esc($value): string
+{
+    return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+}
