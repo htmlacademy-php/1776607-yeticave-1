@@ -11,7 +11,7 @@ require_once 'constants.php';
  *
  * @return string Formatted price string with the ruble sign.
  */
-function format_price(int $price): string {
+function formatPrice(int $price): string {
     $price = (int) ceil($price);
     $formatted_price = (string) $price;
 
@@ -43,21 +43,21 @@ function esc($value): string
  */
 function getDateTimeRange(string $date): array
 {
+    $hoursLeft = 0;
+    $minutesLeft = 0;
+    $secondsLeftRemainder = 0;
+
     // если вдруг будет передана некорректная дата
     try {
         $targetDate = new DateTimeImmutable($date);
+        $now = new DateTimeImmutable('now');
+        $secondsLeft = max(0, $targetDate->getTimestamp() - $now->getTimestamp());
+
+        $hoursLeft = intdiv($secondsLeft, SECONDS_IN_HOUR);
+        $minutesLeft = intdiv($secondsLeft % SECONDS_IN_HOUR, SECONDS_IN_MINUTE);
+        $secondsLeftRemainder = $secondsLeft % SECONDS_IN_MINUTE;
     } catch (Exception $e) {
-        return [0, 0, 0];
     }
-
-    $now = new DateTimeImmutable('now');
-    $secondsLeft = max(0, $targetDate->getTimestamp() - $now->getTimestamp());
-
-    $hoursLeft = intdiv($secondsLeft, 3600);
-    $minutesLeft = intdiv($secondsLeft % 3600, 60);
-    $secondsLeftRemainder = $secondsLeft % 60;
 
     return [$hoursLeft, $minutesLeft, $secondsLeftRemainder];
 }
-
-
