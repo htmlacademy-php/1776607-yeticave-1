@@ -18,6 +18,8 @@
     <ul class="lots__list">
 
         <?php foreach ($lots as $lot): ?>
+            <?php [$hoursLeft, $minutesLeft, $secondsLeft] = getDateTimeRange((string) ($lot['expires_at'] ?? ''));
+                $timerClass = $hoursLeft < 1 ? 'timer timer--finishing' : 'timer'; ?>
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="<?= esc($lot['image'] ?? '') ?>" width="350" height="260" alt="<?= esc($lot['name'] ?? '') ?>">
@@ -28,9 +30,11 @@
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?= format_price($lot['price'] ?? 0); ?></span>
+                            <span class="lot__cost"><?= formatPrice($lot['price'] ?? 0); ?></span>
                         </div>
-                        <div class="lot__timer timer">12:23</div>
+                        <div class="lot__timer <?= esc($timerClass) ?>">
+                            <?= sprintf('%02d:%02d:%02d', $hoursLeft, $minutesLeft, $secondsLeft) ?>
+                        </div>
                     </div>
                 </div>
             </li>

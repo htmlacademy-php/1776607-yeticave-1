@@ -11,7 +11,7 @@ require_once 'constants.php';
  *
  * @return string Formatted price string with the ruble sign.
  */
-function format_price(int $price): string {
+function formatPrice(int $price): string {
     $price = (int) ceil($price);
     $formatted_price = (string) $price;
 
@@ -32,4 +32,32 @@ function format_price(int $price): string {
 function esc($value): string
 {
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+}
+
+/**
+ * Calculates remaining time until the specified date.
+ *
+ * @param string $date Date in YYYY-MM-DD format.
+ *
+ * @return array{0:int,1:int,2:int} Remaining hours, minutes and seconds.
+ */
+function getDateTimeRange(string $date): array
+{
+    $hoursLeft = 0;
+    $minutesLeft = 0;
+    $secondsLeftRemainder = 0;
+
+    // если вдруг будет передана некорректная дата
+    try {
+        $targetDate = new DateTimeImmutable($date);
+        $now = new DateTimeImmutable('now');
+        $secondsLeft = max(0, $targetDate->getTimestamp() - $now->getTimestamp());
+
+        $hoursLeft = intdiv($secondsLeft, SECONDS_IN_HOUR);
+        $minutesLeft = intdiv($secondsLeft % SECONDS_IN_HOUR, SECONDS_IN_MINUTE);
+        $secondsLeftRemainder = $secondsLeft % SECONDS_IN_MINUTE;
+    } catch (Exception $e) {
+    }
+
+    return [$hoursLeft, $minutesLeft, $secondsLeftRemainder];
 }
