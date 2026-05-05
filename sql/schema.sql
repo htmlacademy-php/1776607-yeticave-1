@@ -6,18 +6,6 @@ CREATE DATABASE IF NOT EXISTS yeticave
 -- Выбор базы данных, в которой будут создаваться таблицы.
 USE yeticave;
 
--- Временное отключение проверки внешних ключей нужно, чтобы удалить связанные таблицы в любом порядке.
-SET FOREIGN_KEY_CHECKS = 0;
-
--- Удаление старых таблиц перед повторным созданием схемы.
-DROP TABLE IF EXISTS bets;
-DROP TABLE IF EXISTS lots;
-DROP TABLE IF EXISTS categories;
-DROP TABLE IF EXISTS users;
-
--- Возвращаем проверку внешних ключей перед созданием новых таблиц.
-SET FOREIGN_KEY_CHECKS = 1;
-
 -- Категории лотов: название показывается пользователю, символьный код используется для CSS-классов.
 CREATE TABLE categories (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
