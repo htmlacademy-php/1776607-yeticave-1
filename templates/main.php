@@ -4,8 +4,8 @@
     <ul class="promo__list">
 
         <?php foreach ($categories as $category): ?>
-            <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html"><?= esc($category) ?></a>
+            <li class="promo__item promo__item--<?= esc($category['slug'] ?? '') ?>">
+                <a class="promo__link" href="pages/all-lots.html"><?= esc($category['name'] ?? '') ?></a>
             </li>
         <?php endforeach; ?>
 

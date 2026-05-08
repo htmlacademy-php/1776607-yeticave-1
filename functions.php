@@ -5,11 +5,11 @@ declare(strict_types=1);
 require_once 'constants.php';
 
 /**
- * Formats a numeric price for display in rubles.
+ * Форматирует числовую цену для отображения в рублях.
  *
- * @param int $price Source price value.
+ * @param int $price Исходное значение цены.
  *
- * @return string Formatted price string with the ruble sign.
+ * @return string Отформатированная строка цены со знаком рубля.
  */
 function formatPrice(int $price): string {
     $price = (int) ceil($price);
@@ -23,11 +23,11 @@ function formatPrice(int $price): string {
 }
 
 /**
- * Escapes a string for safe HTML output.
+ * Экранирует строку для безопасного вывода в HTML.
  *
- * @param mixed $value Source value that should be rendered in HTML.
+ * @param mixed $value Исходное значение, которое нужно вывести в HTML.
  *
- * @return string Safe escaped string.
+ * @return string Безопасная экранированная строка.
  */
 function esc($value): string
 {
@@ -35,11 +35,11 @@ function esc($value): string
 }
 
 /**
- * Calculates remaining time until the specified date.
+ * Рассчитывает оставшееся время до указанной даты.
  *
- * @param string $date Date in YYYY-MM-DD format.
+ * @param string $date Дата в формате YYYY-MM-DD.
  *
- * @return array{0:int,1:int,2:int} Remaining hours, minutes and seconds.
+ * @return array{0:int,1:int,2:int} Оставшиеся часы, минуты и секунды.
  */
 function getDateTimeRange(string $date): array
 {

@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 require_once 'helpers.php';
 require_once 'functions.php';
-require_once 'data.php';
+require_once 'db.php';
 
 /**
  * @var array $categories
  * @var array $lots
  */
+
+$con = db_connect();
+$categories = get_categories($con);
+$lots = get_active_lots($con);
 
 $isAuth = rand(0, 1);
 
