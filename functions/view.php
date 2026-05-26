@@ -78,7 +78,7 @@ function render_layout(
     string $userName,
     bool $isMainContainer = true
 ): void {
-    print(include_template('layout.php', compact(
+    print(include_template('layout/layout.php', compact(
         'title',
         'mainContent',
         'categories',

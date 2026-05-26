@@ -13,7 +13,7 @@ $timerValue = $hoursLeft > 0
 $currentPrice = (int) ($lot['current_price'] ?? $lot['initial_price'] ?? 0);
 $minBet = $currentPrice + (int) ($lot['bet_step'] ?? 0);
 ?>
-<?= include_template('nav.php', compact('categories')) ?>
+<?= include_template('_partials/nav.php', compact('categories')) ?>
 <section class="lot-item container">
     <h2><?= esc($lot['name'] ?? '') ?></h2>
     <div class="lot-item__content">
