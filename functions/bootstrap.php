@@ -14,7 +14,8 @@ declare(strict_types=1);
  */
 function bootstrap(): array
 {
-    $con = db_connect();
+    global $con;
+
     $categories = get_categories($con);
 
     return [

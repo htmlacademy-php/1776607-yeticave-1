@@ -15,10 +15,11 @@ extract(bootstrap());
 
 $lots = get_active_lots($con);
 
-render_layout(
-    'YetiCave',
-    include_template('main.php', compact('categories', 'lots')),
-    $categories,
-    $isAuth,
-    $userName
-);
+echo include_template('layout/layout.php', [
+    'title' => 'YetiCave',
+    'mainContent' => include_template('main.php', compact('categories', 'lots')),
+    'categories' => $categories,
+    'isAuth' => $isAuth,
+    'userName' => $userName,
+    'isMainContainer' => true,
+]);

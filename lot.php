@@ -16,22 +16,42 @@ extract(bootstrap());
 $lotId = filter_input(INPUT_GET, 'lot_id', FILTER_VALIDATE_INT);
 
 if ($lotId === null || $lotId === false) {
-    render_not_found($categories, $isAuth, $userName);
+    http_response_code(404);
+
+    echo include_template('layout/layout.php', [
+        'title' => 'Страница не найдена',
+        'mainContent' => include_template('404.php', compact('categories')),
+        'categories' => $categories,
+        'isAuth' => $isAuth,
+        'userName' => $userName,
+        'isMainContainer' => false,
+    ]);
+
     return;
 }
 
 $lot = get_lot_by_id($con, $lotId);
 
 if ($lot === null) {
-    render_not_found($categories, $isAuth, $userName);
+    http_response_code(404);
+
+    echo include_template('layout/layout.php', [
+        'title' => 'Страница не найдена',
+        'mainContent' => include_template('404.php', compact('categories')),
+        'categories' => $categories,
+        'isAuth' => $isAuth,
+        'userName' => $userName,
+        'isMainContainer' => false,
+    ]);
+
     return;
 }
 
-render_layout(
-    (string) ($lot['name'] ?? 'YetiCave'),
-    include_template('lot.php', compact('lot', 'categories')),
-    $categories,
-    $isAuth,
-    $userName,
-    false
-);
+echo include_template('layout/layout.php', [
+    'title' => (string) ($lot['name'] ?? 'YetiCave'),
+    'mainContent' => include_template('lot.php', compact('lot', 'categories')),
+    'categories' => $categories,
+    'isAuth' => $isAuth,
+    'userName' => $userName,
+    'isMainContainer' => false,
+]);
