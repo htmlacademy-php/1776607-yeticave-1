@@ -40,3 +40,8 @@ SELECT
 FROM bets AS b
 WHERE b.lot_id = ?
 ORDER BY b.created_at DESC;
+
+-- Обновить пути к изображениям после переноса в assets/img/ (для уже заполненной БД).
+UPDATE lots
+SET image_url = REPLACE(image_url, 'img/', 'assets/img/')
+WHERE image_url LIKE 'img/%';
