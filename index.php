@@ -17,7 +17,7 @@ $lots = get_active_lots($con);
 
 render_layout(
     'YetiCave',
-    include_template('main.view.php', compact('categories', 'lots')),
+    include_template('main.php', compact('categories', 'lots')),
     $categories,
     $isAuth,
     $userName

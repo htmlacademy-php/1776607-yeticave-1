@@ -78,7 +78,7 @@ function render_layout(
     string $userName,
     bool $isMainContainer = true
 ): void {
-    print(include_template('layout.view.php', compact(
+    print(include_template('layout.php', compact(
         'title',
         'mainContent',
         'categories',
@@ -101,7 +101,7 @@ function render_not_found(array $categories, bool $isAuth, string $userName): vo
 
     render_layout(
         'Страница не найдена',
-        include_template('404.view.php', compact('categories')),
+        include_template('404.php', compact('categories')),
         $categories,
         $isAuth,
         $userName,

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../init.php';
+require_once __DIR__ . '/init.php';
 
 /**
  * @var mysqli $con
@@ -29,7 +29,7 @@ if ($lot === null) {
 
 render_layout(
     (string) ($lot['name'] ?? 'YetiCave'),
-    include_template('lot.view.php', compact('lot', 'categories')),
+    include_template('lot.php', compact('lot', 'categories')),
     $categories,
     $isAuth,
     $userName,
