@@ -6,7 +6,9 @@
  * @var string $userName
  * @var string $mainContent
  * @var array $categories
+ * @var bool  $isMainContainer
  */
+$isMainContainer = $isMainContainer ?? true;
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -52,7 +54,7 @@
             </div>
         </header>
 
-        <main class="container">
+        <main<?= $isMainContainer ? ' class="container"' : '' ?>>
             <?= $mainContent; ?>
         </main>
     </div>

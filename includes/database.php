@@ -55,6 +55,7 @@ function get_active_lots(mysqli $connection): array
 {
     $sqlLots = <<<SQL
     SELECT
+        l.id,
         l.name,
         c.name AS category,
         l.initial_price AS price,
@@ -74,4 +75,38 @@ function get_active_lots(mysqli $connection): array
     }
 
     return mysqli_fetch_all($resultLots, MYSQLI_ASSOC);
+}
+
+/**
+ * Возвращает лот по идентификатору вместе с названием категории и текущей ценой.
+ *
+ * @param mysqli $connection Подключение к базе данных.
+ * @param int    $lotId      Идентификатор лота.
+ *
+ * @return array<string, mixed>|null Данные лота или null, если запись не найдена.
+ */
+function get_lot_by_id(mysqli $connection, int $lotId): ?array
+{
+    $sqlLot = <<<SQL
+    SELECT
+        l.*,
+        c.name AS category_name,
+        COALESCE(MAX(b.price), l.initial_price) AS current_price
+    FROM lots AS l
+    JOIN categories AS c ON c.id = l.category_id
+    LEFT JOIN bets AS b ON b.lot_id = l.id
+    WHERE l.id = ?
+    GROUP BY l.id
+    SQL;
+
+    $stmt = db_get_prepare_stmt($connection, $sqlLot, [$lotId]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $lot = mysqli_fetch_assoc($result);
+
+    if ($lot === false || $lot === null) {
+        return null;
+    }
+
+    return $lot;
 }
