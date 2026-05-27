@@ -5,7 +5,7 @@
 
         <?php foreach ($categories as $category): ?>
             <li class="promo__item promo__item--<?= esc($category['slug'] ?? '') ?>">
-                <a class="promo__link" href="pages/all-lots.html"><?= esc($category['name'] ?? '') ?></a>
+                <a class="promo__link" href="markup/all-lots.html"><?= esc($category['name'] ?? '') ?></a>
             </li>
         <?php endforeach; ?>
 
@@ -19,14 +19,14 @@
 
         <?php foreach ($lots as $lot): ?>
             <?php [$hoursLeft, $minutesLeft, $secondsLeft] = getDateTimeRange((string) ($lot['expires_at'] ?? ''));
-                $timerClass = $hoursLeft < 1 ? 'timer timer--finishing' : 'timer'; ?>
+                $timerClass = 'timer' . ($hoursLeft < 1 ? ' timer--finishing' : ''); ?>
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="<?= esc($lot['image'] ?? '') ?>" width="350" height="260" alt="<?= esc($lot['name'] ?? '') ?>">
                 </div>
                 <div class="lot__info">
                     <span class="lot__category"><?= esc($lot['category'] ?? '') ?></span>
-                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?= esc($lot['name'] ?? '') ?></a></h3>
+                    <h3 class="lot__title"><a class="text-link" href="lot.php?lot_id=<?= (int) ($lot['id'] ?? 0) ?>"><?= esc($lot['name'] ?? '') ?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>

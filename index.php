@@ -2,36 +2,22 @@
 
 declare(strict_types=1);
 
-require_once 'helpers.php';
-require_once 'functions.php';
-require_once 'db.php';
+require_once __DIR__ . '/init.php';
 
 /**
- * @var array $categories
- * @var array $lots
+ * @var mysqli $con
+ * @var array  $categories
+ * @var bool   $isAuth
+ * @var string $userName
  */
 
-$con = db_connect();
-$categories = get_categories($con);
 $lots = get_active_lots($con);
 
-$isAuth = rand(0, 1);
-
-$userName = 'Stepan Kormilin';
-
-$title = 'YetiCave';
-
-$mainContent = include_template('main.php', compact(
-    'categories',
-    'lots'
-));
-
-$layoutContent = include_template('layout.php', compact(
-    'title',
-    'isAuth',
-    'userName',
-    'mainContent',
-    'categories'
-));
-
-print($layoutContent);
+echo include_template('layout/layout.php', [
+    'title' => 'YetiCave',
+    'mainContent' => include_template('main.php', compact('categories', 'lots')),
+    'categories' => $categories,
+    'isAuth' => $isAuth,
+    'userName' => $userName,
+    'isMainContainer' => true,
+]);

@@ -29,7 +29,7 @@ INSERT INTO lots (
   (
     '2014 Rossignol District Snowboard',
     'Сноуборд 2014 Rossignol District Snowboard.',
-    'img/lot-1.jpg',
+    'assets/img/lot-1.jpg',
     10999,
     '2026-08-01 23:59:59',
     500,
@@ -39,7 +39,7 @@ INSERT INTO lots (
   (
     'DC Ply Mens 2016/2017 Snowboard',
     'Сноуборд DC Ply Mens сезона 2016/2017.',
-    'img/lot-2.jpg',
+    'assets/img/lot-2.jpg',
     159999,
     '2026-08-02 23:59:59',
     500,
@@ -49,7 +49,7 @@ INSERT INTO lots (
   (
     'Крепления Union Contact Pro 2015 года размер L/XL',
     'Крепления Union Contact Pro 2015 года, размер L/XL.',
-    'img/lot-3.jpg',
+    'assets/img/lot-3.jpg',
     8000,
     '2026-08-03 23:59:59',
     500,
@@ -59,7 +59,7 @@ INSERT INTO lots (
   (
     'Ботинки для сноуборда DC Mutiny Charcoal',
     'Ботинки для сноуборда DC Mutiny Charcoal.',
-    'img/lot-4.jpg',
+    'assets/img/lot-4.jpg',
     10999,
     '2026-08-04 23:59:59',
     500,
@@ -69,7 +69,7 @@ INSERT INTO lots (
   (
     'Куртка для сноуборда DC Mutiny Charcoal',
     'Куртка для сноуборда DC Mutiny Charcoal.',
-    'img/lot-5.jpg',
+    'assets/img/lot-5.jpg',
     7500,
     '2026-08-05 23:59:59',
     500,
@@ -79,7 +79,7 @@ INSERT INTO lots (
   (
     'Маска Oakley Canopy',
     'Маска Oakley Canopy.',
-    'img/lot-6.jpg',
+    'assets/img/lot-6.jpg',
     5400,
     '2026-08-06 23:59:59',
     500,

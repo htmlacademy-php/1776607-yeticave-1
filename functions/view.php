@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-require_once 'constants.php';
-
 /**
  * Форматирует числовую цену для отображения в рублях.
  *
