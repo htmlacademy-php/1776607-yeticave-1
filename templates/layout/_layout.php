@@ -21,14 +21,14 @@ $isMainContainer = $isMainContainer ?? true;
 <body>
     <div class="page-wrapper">
 
-        <?= include_template('layout/header.php', compact('isAuth', 'userName')) ?>
+        <?= include_template('layout/_header.php', compact('isAuth', 'userName')) ?>
 
         <main<?= $isMainContainer ? ' class="container"' : '' ?>>
             <?= $mainContent; ?>
         </main>
     </div>
 
-    <?= include_template('layout/footer.php', compact('categories')) ?>
+    <?= include_template('layout/_footer.php', compact('categories')) ?>
 
 <script src="assets/js/flatpickr.js"></script>
 <script src="assets/js/script.js"></script>

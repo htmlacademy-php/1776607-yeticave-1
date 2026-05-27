@@ -9,7 +9,7 @@ declare(strict_types=1);
  */
 function db_connect(): mysqli
 {
-    $config = require __DIR__ . '/../config/db.php';
+    $config = require __DIR__ . '/../../config/db.php';
 
     $connection = mysqli_connect(
         $config['host'],
