@@ -19,7 +19,7 @@ if ($isNotFound) {
     http_response_code(HttpCode::NotFound->value);
 }
 
-echo include_template('layout/_layout.php', [
+echo include_template('layout/layout.php', [
     'title' => $isNotFound ? 'Страница не найдена' : (string) ($lot['name'] ?? 'YetiCave'),
     'mainContent' => include_template(
         $isNotFound ? '404.php' : 'lot.php',

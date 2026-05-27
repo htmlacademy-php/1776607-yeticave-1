@@ -13,7 +13,7 @@ require_once __DIR__ . '/init.php';
 
 $lots = get_active_lots($con);
 
-echo include_template('layout/_layout.php', [
+echo include_template('layout/layout.php', [
     'title' => 'YetiCave',
     'mainContent' => include_template('main.php', compact('categories', 'lots')),
     'categories' => $categories,

@@ -124,7 +124,7 @@ function get_noun_plural_form (int $number, string $one, string $two, string $ma
 
 /**
  * Подключает шаблон, передает туда данные и возвращает итоговый HTML контент
- * @param string $name Путь к шаблону относительно templates (например, main.php, layout/_layout.php)
+ * @param string $name Путь к шаблону относительно templates (например, main.php, layout/layout.php)
  * @param array $data Ассоциативный массив с данными для шаблона
  * @return string Итоговый HTML
  */
