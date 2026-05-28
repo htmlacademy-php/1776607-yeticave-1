@@ -11,13 +11,13 @@ declare(strict_types=1);
  */
 function formatPrice(int $price): string {
     $price = (int) ceil($price);
-    $formatted_price = (string) $price;
+    $formattedPrice = (string) $price;
 
     if ($price >= PRICE_FORMAT_THOUSAND_THRESHOLD) {
-        $formatted_price = number_format($price, 0, '.', ' ');
+        $formattedPrice = number_format($price, 0, '.', ' ');
     }
 
-    return $formatted_price . ' ₽';
+    return $formattedPrice . ' ₽';
 }
 
 /**

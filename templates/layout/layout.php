@@ -7,8 +7,10 @@
  * @var string $mainContent
  * @var array  $categories
  * @var bool   $isMainContainer
+ * @var bool   $useFlatpickr
  */
 $isMainContainer = $isMainContainer ?? true;
+$useFlatpickr = $useFlatpickr ?? false;
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -17,18 +19,21 @@ $isMainContainer = $isMainContainer ?? true;
     <title><?= esc($title); ?></title>
     <link href="assets/css/normalize.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
+    <?php if ($useFlatpickr): ?>
+    <link href="assets/css/flatpickr.min.css" rel="stylesheet">
+    <?php endif; ?>
 </head>
 <body>
     <div class="page-wrapper">
 
-        <?= include_template('layout/_header.php', compact('isAuth', 'userName')) ?>
+        <?= includeTemplate('layout/_header.php', compact('isAuth', 'userName')) ?>
 
         <main<?= $isMainContainer ? ' class="container"' : '' ?>>
             <?= $mainContent; ?>
         </main>
     </div>
 
-    <?= include_template('layout/_footer.php', compact('categories')) ?>
+    <?= includeTemplate('layout/_footer.php', compact('categories')) ?>
 
 <script src="assets/js/flatpickr.js"></script>
 <script src="assets/js/script.js"></script>

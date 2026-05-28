@@ -8,8 +8,11 @@ require_once __DIR__ . '/functions/helpers.php';
 require_once __DIR__ . '/functions/view.php';
 require_once __DIR__ . '/functions/database/core.php';
 require_once __DIR__ . '/functions/database/queries.php';
+require_once __DIR__ . '/validation/validators.php';
+require_once __DIR__ . '/validation/rules.php';
+require_once __DIR__ . '/validation/index.php';
 
-$con = db_connect();
-$categories = get_categories($con);
-$isAuth = (bool) rand(0, 1);
+$con = dbConnect();
+$categories = getCategories($con);
+$isAuth = true;
 $userName = 'Stepan Kormilin';
