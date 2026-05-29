@@ -7,15 +7,11 @@ declare(strict_types=1);
  *
  * @param string $name Имя поля в $_POST
  *
- * @return string|null Текст ошибки или null, если поле не пустое
+ * @return bool true, если поле не пустое
  */
-function isFilled(string $name): ?string
+function isFilled(string $name): bool
 {
-    if (!isset($_POST[$name]) || trim((string) $_POST[$name]) === '') {
-        return 'Это поле должно быть заполнено';
-    }
-
-    return null;
+    return isset($_POST[$name]) && trim((string) $_POST[$name]) !== '';
 }
 
 /**
@@ -55,111 +51,100 @@ function isDateValid(string $date): bool
  *
  * @param string $name Имя поля в $_FILES
  *
- * @return string|null Текст ошибки или null, если файл корректен
+ * @return bool true, если файл загружен и имеет допустимый формат
  */
-function isUploadedImageValid(string $name): ?string
+function isUploadedImageValid(string $name): bool
 {
     if (!isset($_FILES[$name])) {
-        return 'Загрузите изображение';
+        return false;
     }
 
     $file = $_FILES[$name];
 
-    if ($file['error'] === UPLOAD_ERR_NO_FILE) {
-        return 'Загрузите изображение';
-    }
-
     if ($file['error'] !== UPLOAD_ERR_OK) {
-        return 'Не удалось загрузить файл';
+        return false;
     }
 
     $temporaryPath = $file['tmp_name'];
 
     if (!is_uploaded_file($temporaryPath)) {
-        return 'Загрузите изображение';
+        return false;
     }
 
     $mimeType = mime_content_type($temporaryPath);
     $allowedMimeTypes = ['image/png', 'image/jpeg'];
 
-    if (!in_array($mimeType, $allowedMimeTypes, true)) {
-        return 'Загрузите изображение в формате PNG или JPEG';
-    }
-
-    return null;
+    return in_array($mimeType, $allowedMimeTypes, true);
 }
 
 /**
  * Проверяет, что значение поля — число больше нуля.
  *
  * @param string $name Имя поля в $_POST
- * @param string $errorMessage Текст ошибки при некорректном значении
  *
- * @return string|null Текст ошибки или null, если значение корректно
+ * @return bool true, если значение корректно
  */
-function isPositiveNumber(string $name, string $errorMessage): ?string
+function isPositiveNumber(string $name): bool
 {
     if (!isset($_POST[$name]) || trim((string) $_POST[$name]) === '') {
-        return null;
+        return true;
     }
 
     $value = str_replace(',', '.', trim((string) $_POST[$name]));
 
-    if (!is_numeric($value) || (float) $value <= 0) {
-        return $errorMessage;
-    }
-
-    return null;
+    return is_numeric($value) && (float) $value > 0;
 }
 
 /**
  * Проверяет, что значение поля — целое число больше нуля.
  *
  * @param string $name Имя поля в $_POST
- * @param string $errorMessage Текст ошибки при некорректном значении
  *
- * @return string|null Текст ошибки или null, если значение корректно
+ * @return bool true, если значение корректно
  */
-function isPositiveInteger(string $name, string $errorMessage): ?string
+function isPositiveInteger(string $name): bool
 {
     if (!isset($_POST[$name]) || trim((string) $_POST[$name]) === '') {
-        return null;
+        return true;
     }
 
     $value = filter_var(trim((string) $_POST[$name]), FILTER_VALIDATE_INT);
 
-    if ($value === false || $value <= 0) {
-        return $errorMessage;
-    }
-
-    return null;
+    return $value !== false && $value > 0;
 }
 
 /**
- * Проверяет дату окончания торгов в формате «ГГГГ-ММ-ДД».
+ * Проверяет формат даты окончания торгов.
  *
  * @param string $name Имя поля в $_POST
  *
- * @return string|null Текст ошибки или null, если дата корректна
+ * @return bool true, если дата указана в формате «ГГГГ-ММ-ДД»
  */
-function isLotEndDateValid(string $name): ?string
+function isLotDateFormatValid(string $name): bool
 {
     if (!isset($_POST[$name]) || trim((string) $_POST[$name]) === '') {
-        return null;
+        return true;
+    }
+
+    return isDateValid(trim((string) $_POST[$name]));
+}
+
+/**
+ * Проверяет, что дата окончания торгов не раньше чем через сутки.
+ *
+ * @param string $name Имя поля в $_POST
+ *
+ * @return bool true, если дата не раньше чем через сутки
+ */
+function isLotEndDateMinValid(string $name): bool
+{
+    if (!isset($_POST[$name]) || trim((string) $_POST[$name]) === '') {
+        return true;
     }
 
     $date = trim((string) $_POST[$name]);
-
-    if (!isDateValid($date)) {
-        return 'Введите дату в формате ГГГГ-ММ-ДД';
-    }
-
     $endDate = DateTimeImmutable::createFromFormat('Y-m-d', $date);
     $minDate = (new DateTimeImmutable('today'))->modify('+1 day');
 
-    if ($endDate === false || $endDate < $minDate) {
-        return 'Укажите дату не раньше чем через сутки';
-    }
-
-    return null;
+    return $endDate !== false && $endDate >= $minDate;
 }
