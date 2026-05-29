@@ -2,27 +2,6 @@
 declare(strict_types=1);
 
 /**
- * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
- *
- * Примеры использования:
- * is_date_valid('2019-01-01'); // true
- * is_date_valid('2016-02-29'); // true
- * is_date_valid('2019-04-31'); // false
- * is_date_valid('10.10.2010'); // false
- * is_date_valid('10/10/2010'); // false
- *
- * @param string $date Дата в виде строки
- *
- * @return bool true при совпадении с форматом 'ГГГГ-ММ-ДД', иначе false
- */
-function is_date_valid(string $date) : bool {
-    $format_to_check = 'Y-m-d';
-    $dateTimeObj = date_create_from_format($format_to_check, $date);
-
-    return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
-}
-
-/**
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
  *
  * @param $link mysqli Ресурс соединения
@@ -31,7 +10,7 @@ function is_date_valid(string $date) : bool {
  *
  * @return mysqli_stmt Подготовленное выражение
  */
-function db_get_prepare_stmt($link, $sql, $data = []) {
+function dbGetPrepareStmt($link, $sql, $data = []) {
     $stmt = mysqli_prepare($link, $sql);
 
     if ($stmt === false) {
@@ -41,7 +20,7 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 
     if ($data) {
         $types = '';
-        $stmt_data = [];
+        $stmtData = [];
 
         foreach ($data as $value) {
             $type = 's';
@@ -58,11 +37,11 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 
             if ($type) {
                 $types .= $type;
-                $stmt_data[] = $value;
+                $stmtData[] = $value;
             }
         }
 
-        $values = array_merge([$stmt, $types], $stmt_data);
+        $values = array_merge([$stmt, $types], $stmtData);
 
         $func = 'mysqli_stmt_bind_param';
         $func(...$values);
@@ -81,10 +60,10 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
  * Ограничения: только для целых чисел
  *
  * Пример использования:
- * $remaining_minutes = 5;
- * echo "Я поставил таймер на {$remaining_minutes} " .
- *     get_noun_plural_form(
- *         $remaining_minutes,
+ * $remainingMinutes = 5;
+ * echo "Я поставил таймер на {$remainingMinutes} " .
+ *     getNounPluralForm(
+ *         $remainingMinutes,
  *         'минута',
  *         'минуты',
  *         'минут'
@@ -98,7 +77,7 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
  *
  * @return string Рассчитанная форма множественнго числа
  */
-function get_noun_plural_form (int $number, string $one, string $two, string $many): string
+function getNounPluralForm(int $number, string $one, string $two, string $many): string
 {
     $number = (int) $number;
     $mod10 = $number % 10;
@@ -128,7 +107,7 @@ function get_noun_plural_form (int $number, string $one, string $two, string $ma
  * @param array $data Ассоциативный массив с данными для шаблона
  * @return string Итоговый HTML
  */
-function include_template($name, array $data = []) {
+function includeTemplate($name, array $data = []) {
     $name = __DIR__ . '/../templates/' . $name;
     $result = '';
 
@@ -143,4 +122,37 @@ function include_template($name, array $data = []) {
     $result = ob_get_clean();
 
     return $result;
+}
+
+/**
+ * Переносит загруженное изображение лота в публичную директорию.
+ *
+ * @param string $fieldName Имя поля в $_FILES.
+ *
+ * @return string|null Относительный путь к файлу или null при ошибке сохранения.
+ */
+function saveUploadedLotImage(string $fieldName): ?string
+{
+    if (!isset($_FILES[$fieldName]) || $_FILES[$fieldName]['error'] !== UPLOAD_ERR_OK) {
+        return null;
+    }
+
+    $temporaryPath = $_FILES[$fieldName]['tmp_name'];
+    $mimeType = mime_content_type($temporaryPath);
+    $extension = $mimeType === 'image/png' ? 'png' : 'jpg';
+    $uploadsPath = __DIR__ . '/../' . UPLOADS_DIR;
+
+    // создаем директорию для загрузки изображений, если она не существует
+    if (!is_dir($uploadsPath)) {
+        mkdir($uploadsPath, 0755, true);
+    }
+
+    $fileName = uniqid('lot_', true) . '.' . $extension;
+    $destinationPath = $uploadsPath . '/' . $fileName;
+
+    if (!move_uploaded_file($temporaryPath, $destinationPath)) {
+        return null;
+    }
+
+    return UPLOADS_DIR . '/' . $fileName;
 }

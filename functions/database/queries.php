@@ -7,11 +7,11 @@ declare(strict_types=1);
  *
  * @param mysqli $connection Подключение к базе данных.
  *
- * @return array<int, array{name:string, slug:string}>
+ * @return array<int, array{id:int, name:string, slug:string}>
  */
-function get_categories(mysqli $connection): array
+function getCategories(mysqli $connection): array
 {
-    $sqlCategories = 'SELECT name, slug FROM categories ORDER BY id';
+    $sqlCategories = 'SELECT id, name, slug FROM categories ORDER BY id';
     $resultCategories = mysqli_query($connection, $sqlCategories);
 
     if ($resultCategories === false) {
@@ -28,7 +28,7 @@ function get_categories(mysqli $connection): array
  *
  * @return array<int, array{id:int, name:string, category:string, price:string, image:string, expires_at:string}>
  */
-function get_active_lots(mysqli $connection): array
+function getActiveLots(mysqli $connection): array
 {
     $sqlLots = <<<SQL
     SELECT
@@ -62,7 +62,7 @@ function get_active_lots(mysqli $connection): array
  *
  * @return array<string, mixed>|null Данные лота или null, если запись не найдена.
  */
-function get_lot_by_id(mysqli $connection, int $lotId): ?array
+function getLotById(mysqli $connection, int $lotId): ?array
 {
     $sqlLot = <<<SQL
     SELECT
@@ -76,7 +76,7 @@ function get_lot_by_id(mysqli $connection, int $lotId): ?array
     GROUP BY l.id
     SQL;
 
-    $stmt = db_get_prepare_stmt($connection, $sqlLot, [$lotId]);
+    $stmt = dbGetPrepareStmt($connection, $sqlLot, [$lotId]);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     $lot = mysqli_fetch_assoc($result);
@@ -86,4 +86,45 @@ function get_lot_by_id(mysqli $connection, int $lotId): ?array
     }
 
     return $lot;
+}
+
+/**
+ * Добавляет новый лот в БД.
+ *
+ * @param mysqli              $connection   Подключение к БД.
+ * @param array<string,mixed> $lotData      Данные лота для вставки.
+ *
+ * @return int Идентификатор созданного лота.
+ */
+function createLot(mysqli $connection, array $lotData): int
+{
+    $sqlInsertLot = <<<SQL
+    INSERT INTO lots (
+        name,
+        description,
+        image_url,
+        initial_price,
+        expires_at,
+        bet_step,
+        author_id,
+        category_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    SQL;
+
+    $stmt = dbGetPrepareStmt($connection, $sqlInsertLot, [
+        $lotData['name'],
+        $lotData['description'],
+        $lotData['image_url'],
+        $lotData['initial_price'],
+        $lotData['expires_at'],
+        $lotData['bet_step'],
+        $lotData['author_id'],
+        $lotData['category_id'],
+    ]);
+
+    if (!mysqli_stmt_execute($stmt)) {
+        die('Ошибка добавления лота: ' . mysqli_error($connection));
+    }
+
+    return (int) mysqli_insert_id($connection);
 }

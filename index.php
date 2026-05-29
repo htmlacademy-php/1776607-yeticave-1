@@ -11,11 +11,11 @@ require_once __DIR__ . '/init.php';
  * @var string $userName
  */
 
-$lots = get_active_lots($con);
+$lots = getActiveLots($con);
 
-echo include_template('layout/layout.php', [
+echo includeTemplate('layout/layout.php', [
     'title' => 'YetiCave',
-    'mainContent' => include_template('main.php', compact('categories', 'lots')),
+    'mainContent' => includeTemplate('main.php', compact('categories', 'lots')),
     'categories' => $categories,
     'isAuth' => $isAuth,
     'userName' => $userName,

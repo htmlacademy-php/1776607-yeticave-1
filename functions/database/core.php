@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * @return mysqli
  */
-function db_connect(): mysqli
+function dbConnect(): mysqli
 {
     $config = require __DIR__ . '/../../config/db.php';
 
