@@ -12,32 +12,26 @@ require_once __DIR__ . '/init.php';
  */
 
 if (!$isAuth) {
-    http_response_code(403);
+    http_response_code(HttpCode::Forbidden->value);
     header('Location: index.php');
     exit;
 }
 
-$formData = [
-    'lot-name' => '',
-    'category' => '',
-    'message' => '',
-    'lot-rate' => '',
-    'lot-step' => '',
-    'lot-date' => '',
+$formFieldNames = [
+    'lot-name',
+    'category',
+    'description',
+    'lot-rate',
+    'lot-step',
+    'lot-date',
 ];
+$formData = getFormData($formFieldNames);
 $errors = [];
 $hasErrors = false;
 $categoryIds = array_map('intval', array_column($categories, 'id'));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $formData = [
-        'lot-name' => trim((string) ($_POST['lot-name'] ?? '')),
-        'category' => trim((string) ($_POST['category'] ?? '')),
-        'message' => trim((string) ($_POST['message'] ?? '')),
-        'lot-rate' => trim((string) ($_POST['lot-rate'] ?? '')),
-        'lot-step' => trim((string) ($_POST['lot-step'] ?? '')),
-        'lot-date' => trim((string) ($_POST['lot-date'] ?? '')),
-    ];
+    $formData = getFormData($formFieldNames, $_POST);
 
     $errors = validateForm('add-lot');
 
@@ -64,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $newLotId = createLot($con, [
                 'name' => $formData['lot-name'],
-                'description' => $formData['message'],
+                'description' => $formData['description'],
                 'image_url' => $imagePath,
                 'initial_price' => $initialPrice,
                 'expires_at' => $expiresAt,

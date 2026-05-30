@@ -39,10 +39,10 @@ if ($hasErrors) {
             <span class="form__error"><?= esc($errors['category'] ?? '') ?></span>
         </div>
     </div>
-    <div class="form__item form__item--wide<?= isset($errors['message']) ? ' form__item--invalid' : '' ?>">
-        <label for="message">Описание <sup>*</sup></label>
-        <textarea id="message" name="message" placeholder="Напишите описание лота"><?= esc($formData['message'] ?? '') ?></textarea>
-        <span class="form__error"><?= esc($errors['message'] ?? '') ?></span>
+    <div class="form__item form__item--wide<?= isset($errors['description']) ? ' form__item--invalid' : '' ?>">
+        <label for="description">Описание <sup>*</sup></label>
+        <textarea id="description" name="description" placeholder="Напишите описание лота"><?= esc($formData['description'] ?? '') ?></textarea>
+        <span class="form__error"><?= esc($errors['description'] ?? '') ?></span>
     </div>
     <div class="form__item form__item--file<?= isset($errors['lot-img']) ? ' form__item--invalid' : '' ?>">
         <label>Изображение <sup>*</sup></label>
