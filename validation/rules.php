@@ -10,7 +10,7 @@ const VALIDATION_RULES = [
         'category' => [
             ['validator' => 'isFilled', 'error' => 'Выберите категорию'],
         ],
-        'message' => [
+        'description' => [
             ['validator' => 'isFilled', 'error' => 'Напишите описание лота'],
         ],
         'lot-img' => [

@@ -156,3 +156,26 @@ function saveUploadedLotImage(string $fieldName): ?string
 
     return UPLOADS_DIR . '/' . $fileName;
 }
+
+/**
+ * Формирует ассоциативный массив данных формы по списку полей.
+ *
+ * @param array<int, string> $fieldNames Имена полей формы
+ * @param array<string, mixed>|null $source Источник данных (например $_POST) или null для пустых значений
+ *
+ * @return array<string, string>
+ */
+function getFormData(array $fieldNames, ?array $source = null): array
+{
+    $formData = [];
+
+    foreach ($fieldNames as $fieldName) {
+        if ($source === null) {
+            $formData[$fieldName] = '';
+        } else {
+            $formData[$fieldName] = trim((string) ($source[$fieldName] ?? ''));
+        }
+    }
+
+    return $formData;
+}
